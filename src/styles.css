@@ -48,7 +48,7 @@ canvas{
 .page-container{
     margin: 0 auto;
     width: 970px;
-    height: 100vh;
+    min-height: 100vh;
     padding: 64px 64px;
 }
 
