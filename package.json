@@ -19,8 +19,10 @@
     "@angular/platform-browser": "~8.2.4",
     "@angular/platform-browser-dynamic": "~8.2.4",
     "@angular/router": "~8.2.4",
+    "ngx-color-picker": "^8.1.0",
     "rxjs": "~6.4.0",
     "tslib": "^1.10.0",
+    "xlsx": "^0.15.1",
     "zone.js": "~0.9.1"
   },
   "devDependencies": {
