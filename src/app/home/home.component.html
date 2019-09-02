@@ -6,7 +6,8 @@
         <div class="display-row">
             <button class="btn-outline" (click)="loadExcelFile()">
                 <span>Select file</span>
-                <i class="material-icons md-18 margin-left-24">folder_open</i>
+                <i *ngIf="plots.length === 0" class="material-icons md-18 margin-left-24">folder_open</i>
+                <i *ngIf="plots.length > 0" class="material-icons md-18 margin-left-24">check_circle_outline</i>
             </button>
 
             <form>
