@@ -1,0 +1,29 @@
+<div class="page-container">
+    <h1>Graphics</h1>
+
+    <div class="card-container margin-top-24">
+
+        <div class="display-row">
+            <button class="btn-outline">
+                <span>Select file</span>
+                <i class="material-icons md-18 margin-left-24">folder_open</i>
+            </button>
+    
+    
+               <!-- Number of variables selection -->
+            <div class="dropdown margin-left-24">
+                <button class="btn btn-secondary dropdown-toggle btn-spacing" type="button" id="dropdownMenu1"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Chart - <span class="margin-right-24">{{selectedChart}}</span> 
+                </button>
+    
+                <div class="dropdown-menu dropdown-primary">
+                    <a *ngFor="let item of charts" (click)="setChart(item)"
+                    class="dropdown-item">{{item}}</a>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>

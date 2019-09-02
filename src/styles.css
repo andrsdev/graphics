@@ -1,1 +1,65 @@
 /* You can add global styles to this file, and also import other style files */
+
+
+html, body{
+    font-family: "Montserrat", sans-serif;
+    box-sizing: border-box !important;
+    /* width: 100vw;
+    height: 100vh; */
+}
+
+button {
+    font-family: "Montserrat"
+}
+
+h1{
+    font-weight: 700;
+}
+
+.page-container{
+    width: 100vw;
+    height: 100vh;
+    background-color: #fcfcfc;
+    padding: 64px 64px;
+}
+
+.card-container{
+    color: white;
+    box-shadow: 4px 8px 30px rgba(0, 0, 0, 0.08);
+    padding: 24px;
+    border-radius: 12px;
+}
+
+.margin-top-24{
+    margin-top: 24px;
+}
+
+.margin-left-24{
+    margin-left: 24px;
+}
+
+.margin-right-24{
+    margin-right: 24px;
+}
+
+.display-row{
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.btn-outline{
+    outline: none;
+    width: fit-content;
+    cursor: pointer;
+    background-color: #ededff;
+    color: blue;
+    border: none;
+    border-radius: 100px;
+    padding: 8px 16px;
+    font-size: 16px;
+    font-weight: 500;
+    font-family: 'Montserrat';
+    display: flex;
+    align-items: center;
+}
