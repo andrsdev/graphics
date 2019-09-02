@@ -1,8 +1,9 @@
 <div class="page-container">
     <h1>Graphics</h1>
 
-    <div class="card-container margin-top-24">
 
+    <!-- menu -->
+    <div class="card-container margin-top-24">
         <div class="display-row">
             <button class="btn-outline" (click)="loadExcelFile()">
                 <span>Select file</span>
@@ -27,8 +28,17 @@
                     class="dropdown-item">{{item}}</a>
                 </div>
             </div>
+
+            <div class="color-picker-container">
+                <div [(colorPicker)]="color" [style.background]="color" class="color-circle"></div>
+            </div>
         </div>
-
-
     </div>
+
+    <!-- Canvas -->
+    <div class="card-container margin-top-24">
+        <canvas id="canvas" class="canvas"></canvas>
+    </div>
+
+
 </div>

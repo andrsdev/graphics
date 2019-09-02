@@ -8,7 +8,7 @@ import * as XLSX from 'xlsx';
 })
 export class HomeComponent implements OnInit {
 
-  charts = ['Dispersion', 'Lines', 'Columns', 'Bars', 'histogram', 'Combined']
+  charts = ['Dispersion', 'Lines', 'Columns', 'Bars', 'Histogram', 'Combined']
   selectedChart = this.charts[0];
   plots = [];
   
