@@ -16,6 +16,10 @@ h1{
     font-weight: 700;
 }
 
+.hidden{
+    display: none;
+}
+
 .page-container{
     width: 100vw;
     height: 100vh;

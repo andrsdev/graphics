@@ -4,10 +4,14 @@
     <div class="card-container margin-top-24">
 
         <div class="display-row">
-            <button class="btn-outline">
+            <button class="btn-outline" (click)="loadExcelFile()">
                 <span>Select file</span>
                 <i class="material-icons md-18 margin-left-24">folder_open</i>
             </button>
+
+            <form>
+                <input id='fileOpener' onClick="this.form.reset();" type='file' (change)="onFileChange($event)" multiple="false" class="hidden" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"/>
+            </form>
     
     
                <!-- Number of variables selection -->
