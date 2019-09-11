@@ -10,7 +10,19 @@ export class HomeComponent implements OnInit {
 
   charts = ['Dispersion', 'Lines', 'Columns', 'Bars', 'Histogram', 'Combined']
   selectedChart = this.charts[0];
+  
+  canvasWidth = 1000;
+  canvasHeight = 600;
+
   plots = [];
+
+  minX: number;
+  minY: number;
+  maxX: number;
+  maxY: number;
+
+  xDistance: number;
+  yDistance: number;
   
   constructor() { }
 
@@ -43,27 +55,62 @@ export class HomeComponent implements OnInit {
         /* save data */
         let items = (XLSX.utils.sheet_to_json(ws, {header: 1}));
         items.shift();
-        this.convertToMatTableData(items);
+        this.initializeData(items);
       };
       reader.readAsBinaryString(target.files[0]);
     }
 
   }
 
-  convertToMatTableData(items: any[]){
+  initializeData(items: any[]){
     this.plots = [];
+
     for (let i = 0; i < items.length; i++) {
       const element = items[i];
 
       if(element.length === 2){
+
+        let x = element[0];
+        let y = element[1];
+        
+        //Iniitialize the min and max values
+        if(i === 0){
+          this.minX = x;
+          this.minY = y;
+          this.maxX = x;
+          this.maxY = y;
+        } else {
+          if(this.minX > x) this.minX = x;
+          if(this.minY > y) this.minY = y;
+          if(this.maxX < x) this.maxX = x;
+          if(this.maxY < y) this.maxY = y;
+        }
+
         this.plots.push({
-          x: element[0],
-          y: element[1],
+          x: x,
+          y: y,
         });
       }
     }
 
+    this.xDistance = this.maxX - this.minX;
+    this.yDistance = this.maxY - this.minY;
+
+
+    this.drawCartesianPlane();
+
     console.log(this.plots);
   }
+
+  drawCartesianPlane(){
+   let element = <HTMLCanvasElement> document.getElementById("canvas");
+   let canvas = element.getContext("2d");
+
+   
+  
+   canvas.fillStyle = "#00FF00";
+   canvas.fillRect(0, 0, 1000, 600);
+  }
+
 
 }
