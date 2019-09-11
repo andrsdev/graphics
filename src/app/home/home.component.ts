@@ -112,6 +112,8 @@ export class HomeComponent implements OnInit {
   drawCartesianPlane(){
     let element = <HTMLCanvasElement> document.getElementById("canvas");
     let canvas = element.getContext("2d");
+    canvas.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
+    canvas.fillStyle = "#000000";
 
     let maxDistanceX = Math.max(Math.abs(this.minX), Math.abs(this.maxX));
     let maxDistanceY = Math.max(Math.abs(this.minY), Math.abs(this.maxY));
