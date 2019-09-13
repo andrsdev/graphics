@@ -99,6 +99,9 @@ export class HomeComponent implements OnInit {
       case 'Dispersion':
         this.drawDispersionGraphic();
         break;
+      case 'Bars':
+        this.drawBarsGraphic();
+        break;
     
       default:
         break;
@@ -177,6 +180,29 @@ export class HomeComponent implements OnInit {
 
     canvas.stroke();
   }
+
+  drawBarsGraphic(){
+    let element = <HTMLCanvasElement> document.getElementById("canvas");
+    let canvas = element.getContext("2d");
+
+    let xProportion = (this.canvasWidth / 2) / this.maxX;
+    let yProportion = (this.canvasHeight / 2) / this.maxY;
+
+    canvas.fillStyle = "#0000FF";
+    canvas.moveTo(this.canvasWidth / 2, this.canvasHeight / 2);
+    for (let i = 0; i < this.plots.length; i++) {
+
+      const plot: any = this.plots[i];
+      let x = this.canvasWidth / 2 + plot.x*xProportion;
+      let y = this.canvasHeight / 2 - plot.y*yProportion;
+
+
+      canvas.fillRect(x - 2, y - 1.5 , 4, this.canvasHeight / 2 - y);
+    }
+
+    canvas.stroke();
+  }
+
 
 
 }
