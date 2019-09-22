@@ -121,6 +121,9 @@ export class HomeComponent implements OnInit {
       case 'Lines':
         this.drawLinesGraphic();
         break;
+      case 'Bars':
+        this.drawBarsGraphic();
+        break;
     
       default:
         break;
@@ -297,6 +300,32 @@ export class HomeComponent implements OnInit {
 
 
       canvas.fillRect(x - 2, y - 1.5 , 4, this.canvasHeight / 2 - y);
+    }
+
+    canvas.stroke();
+  }
+
+
+  drawBarsGraphic(){
+    
+    this.drawCartesianPlane();
+
+    let element = <HTMLCanvasElement> document.getElementById("canvas");
+    let canvas = element.getContext("2d");
+    canvas.beginPath();
+
+    let xProportion = (this.canvasWidth / 2) / this.maxX;
+    let yProportion = (this.canvasHeight / 2) / this.maxY;
+
+    canvas.fillStyle = this.color;
+    canvas.moveTo(this.canvasWidth / 2, this.canvasHeight / 2);
+    for (let i = 0; i < this.plots.length; i++) {
+
+      const plot: any = this.plots[i];
+      let x = this.canvasWidth / 2 + plot.x*xProportion;
+      let y = this.canvasHeight / 2 - plot.y*yProportion;
+      
+      canvas.fillRect(this.canvasWidth / 2, y - 1 , x - (this.canvasWidth / 2), 2);
     }
 
     canvas.stroke();
