@@ -9,7 +9,7 @@ import * as XLSX from 'xlsx';
 export class HomeComponent implements OnInit {
 
   color = "#0000FF";
-  charts = ['Dispersion', ,'Dispersion lines', 'Lines','Columns', 'Bars', 'Histogram', 'Combined'];
+  charts = ['Dispersion', ,'Dispersion lines', 'Lines','Columns', 'Bars', 'Combined'];
   selectedChart = this.charts[0];
   
   canvasWidth = 1000;
@@ -123,6 +123,9 @@ export class HomeComponent implements OnInit {
         break;
       case 'Bars':
         this.drawBarsGraphic();
+        break;
+      case 'Combined':
+        this.drawCombinedGraphic();
         break;
     
       default:
@@ -324,8 +327,40 @@ export class HomeComponent implements OnInit {
       const plot: any = this.plots[i];
       let x = this.canvasWidth / 2 + plot.x*xProportion;
       let y = this.canvasHeight / 2 - plot.y*yProportion;
-      
+
       canvas.fillRect(this.canvasWidth / 2, y - 1 , x - (this.canvasWidth / 2), 2);
+    }
+
+    canvas.stroke();
+  }
+
+  drawCombinedGraphic(){
+    this.drawCartesianPlane();
+
+    let element = <HTMLCanvasElement> document.getElementById("canvas");
+    let canvas = element.getContext("2d");
+    canvas.beginPath();
+    canvas.strokeStyle = this.color;
+    canvas.fillStyle = this.color;
+    
+    let xProportion = (this.canvasWidth / 2) / this.maxX;
+    let yProportion = (this.canvasHeight / 2) / this.maxY;
+
+
+    let sortedPlots = [...this.plots];
+    sortedPlots.sort(this.comparePlotsX);
+
+    canvas.moveTo(this.canvasWidth / 2, this.canvasHeight / 2);
+    for (let i = 0; i < sortedPlots.length; i++) {
+
+      const plot: any = sortedPlots[i];
+      let x = this.canvasWidth / 2 + plot.x*xProportion;
+      let y = this.canvasHeight / 2 - plot.y*yProportion;
+
+ 
+      canvas.lineTo(x, y);   
+      canvas.fillRect(x - 2, y - 1.5 , 4, 3);
+      canvas.fillRect(x - 2, y - 1.5 , 4, this.canvasHeight / 2 - y);
     }
 
     canvas.stroke();
