@@ -30,7 +30,7 @@
             </div>
 
             <div class="color-picker-container">
-                <div [(colorPicker)]="color" [style.background]="color" class="color-circle"></div>
+                <div (colorPickerChange)="setColor(color)" [(colorPicker)]="color" [style.background]="color" class="color-circle"></div>
             </div>
         </div>
     </div>
