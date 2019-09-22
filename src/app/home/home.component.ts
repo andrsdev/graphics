@@ -9,7 +9,7 @@ import * as XLSX from 'xlsx';
 export class HomeComponent implements OnInit {
 
   color = "#0000FF";
-  charts = ['Dispersion', 'Lines', 'Columns', 'Bars', 'Histogram', 'Combined'];
+  charts = ['Dispersion', ,'Dispersion lines', 'Lines','Columns', 'Bars', 'Histogram', 'Combined'];
   selectedChart = this.charts[0];
   
   canvasWidth = 1000;
@@ -112,6 +112,9 @@ export class HomeComponent implements OnInit {
       case 'Dispersion':
         this.drawDispersionGraphic();
         break;
+      case 'Dispersion lines':
+          this.drawDispersionLinesGraphic();
+          break;
       case 'Columns':
         this.drawColumnsGraphic();
         break;
@@ -128,13 +131,23 @@ export class HomeComponent implements OnInit {
     console.log(this.plots);
   }
 
+  
+  comparePlotsX(plotA, plotB ) {
+    if ( plotA.x < plotB.x ){
+      return -1;
+    }
+
+    return 0;
+  }
+
   drawCartesianPlane(){
     let element = <HTMLCanvasElement> document.getElementById("canvas");
     let canvas = element.getContext("2d");
-
+    
+    canvas.fillStyle = "#000000";
+    canvas.strokeStyle = "#000000";
     canvas.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
     canvas.beginPath();
-    canvas.fillStyle = "#000000";
 
     let maxDistanceX = Math.max(Math.abs(this.minX), Math.abs(this.maxX));
     let maxDistanceY = Math.max(Math.abs(this.minY), Math.abs(this.maxY));
@@ -182,6 +195,7 @@ export class HomeComponent implements OnInit {
     
     let element = <HTMLCanvasElement> document.getElementById("canvas");
     let canvas = element.getContext("2d");
+    canvas.beginPath();
   
     let xProportion = (this.canvasWidth / 2) / this.maxX;
     let yProportion = (this.canvasHeight / 2) / this.maxY;
@@ -202,22 +216,56 @@ export class HomeComponent implements OnInit {
     canvas.stroke();
   }
 
+  drawDispersionLinesGraphic(){
+    
+    this.drawCartesianPlane();
+
+    let element = <HTMLCanvasElement> document.getElementById("canvas");
+    let canvas = element.getContext("2d");
+    canvas.beginPath();
+    canvas.strokeStyle = this.color;
+    canvas.fillStyle = this.color;
+
+    let xProportion = (this.canvasWidth / 2) / this.maxX;
+    let yProportion = (this.canvasHeight / 2) / this.maxY;
+
+
+    canvas.moveTo(this.canvasWidth / 2, this.canvasHeight / 2);
+    for (let i = 0; i < this.plots.length; i++) {
+
+      const plot: any = this.plots[i];
+      let x = this.canvasWidth / 2 + plot.x*xProportion;
+      let y = this.canvasHeight / 2 - plot.y*yProportion;
+
+ 
+      canvas.lineTo(x, y);   
+    }
+
+    canvas.stroke();
+  }
+
+
   drawLinesGraphic(){
     
     this.drawCartesianPlane();
 
     let element = <HTMLCanvasElement> document.getElementById("canvas");
     let canvas = element.getContext("2d");
-
+    canvas.beginPath();
+    canvas.strokeStyle = this.color;
+    canvas.fillStyle = this.color;
+    
     let xProportion = (this.canvasWidth / 2) / this.maxX;
     let yProportion = (this.canvasHeight / 2) / this.maxY;
 
-    canvas.fillStyle = this.color;
+
+    let sortedPlots = [...this.plots];
+    sortedPlots.sort(this.comparePlotsX);
 
     canvas.moveTo(this.canvasWidth / 2, this.canvasHeight / 2);
-    for (let i = 0; i < this.plots.length; i++) {
+    for (let i = 0; i < sortedPlots.length; i++) {
 
-      const plot: any = this.plots[i];
+      const plot: any = sortedPlots[i];
       let x = this.canvasWidth / 2 + plot.x*xProportion;
       let y = this.canvasHeight / 2 - plot.y*yProportion;
 
@@ -234,7 +282,7 @@ export class HomeComponent implements OnInit {
 
     let element = <HTMLCanvasElement> document.getElementById("canvas");
     let canvas = element.getContext("2d");
-
+    canvas.beginPath();
 
     let xProportion = (this.canvasWidth / 2) / this.maxX;
     let yProportion = (this.canvasHeight / 2) / this.maxY;
