@@ -9,10 +9,10 @@ import * as XLSX from 'xlsx';
 export class HomeComponent implements OnInit {
 
   color = "#0000FF";
-  charts = ['Dispersion', ,'Dispersion lines', 'Lines','Columns', 'Bars', 'Combined'];
+  charts = ['Dispersion', ,'Dispersion lines', 'Lines','Columns', 'Bars', 'Combined', 'Pie'];
   selectedChart = this.charts[0];
   
-  canvasWidth = 1000;
+  canvasWidth = 794;
   canvasHeight = 400;
 
   items = [];
@@ -126,6 +126,9 @@ export class HomeComponent implements OnInit {
         break;
       case 'Combined':
         this.drawCombinedGraphic();
+        break;
+      case 'Pie':
+        this.drawPieGraphic();
         break;
     
       default:
@@ -360,11 +363,83 @@ export class HomeComponent implements OnInit {
  
       canvas.lineTo(x, y);   
       canvas.fillRect(x - 2, y - 1.5 , 4, 3);
-      canvas.fillRect(x - 2, y - 1.5 , 4, this.canvasHeight / 2 - y);
+      // canvas.fillRect(x - 2, y - 1.5 , 4, this.canvasHeight / 2 - y);
     }
 
     canvas.stroke();
   }
+
+
+  drawPieGraphic(){
+    
+    let element = <HTMLCanvasElement> document.getElementById("canvas");
+    let canvas = element.getContext("2d");
+
+    canvas.fillStyle = "#000000";
+    canvas.strokeStyle = "#000000";
+    canvas.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
+    canvas.beginPath();
+
+    let totalX = 0;
+    let totalY = 0;
+    let TOTAL;
+
+  
+    let xProportion = (this.canvasWidth / 2) / this.maxX;
+    let yProportion = (this.canvasHeight / 2) / this.maxY;
+
+    canvas.fillStyle = this.color;
+
+     // Colors
+    let colors = [this.color, '#00BCD4'];
+
+    for (let i = 0; i < this.plots.length; i++) {
+      const plot: any = this.plots[i];
+      totalX+= plot.x;
+      totalY+= plot.y;
+    }
+
+    TOTAL = totalX + totalY;
+    let angles = [2 * Math.PI * (totalX / TOTAL), 2 * Math.PI * (totalY / TOTAL)];
+    console.log(angles);
+
+    // Temporary variables, to store each arc angles
+    let beginAngle = 0;
+    let endAngle = 0;
+
+    // Iterate through the angles
+    for(var i = 0; i < angles.length; i++) {
+      
+      // Begin where we left off
+      beginAngle = endAngle;
+      // End Angle
+      endAngle = endAngle + angles[i];
+      
+      canvas.beginPath();
+      canvas.fillStyle = colors[i];
+      
+      canvas.moveTo(this.canvasWidth / 2, 200);
+      canvas.arc(this.canvasWidth / 2, 200, 120, beginAngle, endAngle);
+      canvas.lineTo(this.canvasWidth / 2, 200);
+      canvas.stroke();
+      
+      // Fill
+      canvas.fill();
+    }
+
+    canvas.fillStyle = '#000000';
+    canvas.fillText("X = " + (totalX / TOTAL).toString(), this.canvasWidth / 2, this.canvasHeight - 30);
+    canvas.fillText("Y = "  + (totalY / TOTAL).toString(), this.canvasWidth / 2, this.canvasHeight - 10);
+
+    canvas.fillStyle = this.color;
+    canvas.fillRect(this.canvasWidth / 2 - 8, this.canvasHeight - 36, 4, 4);
+
+    canvas.fillStyle = '#00BCD4';
+    canvas.fillRect(this.canvasWidth / 2 - 8, this.canvasHeight - 16, 4, 4);
+
+    canvas.stroke();
+  }
+
 
 
 
