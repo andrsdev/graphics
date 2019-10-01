@@ -30,14 +30,14 @@
             </div>
 
             <div class="color-picker-container">
-                <div [(colorPicker)]="color" [style.background]="color" class="color-circle"></div>
+                <div (colorPickerChange)="setColor(color)" [(colorPicker)]="color" [style.background]="color" class="color-circle"></div>
             </div>
         </div>
     </div>
 
     <!-- Canvas -->
     <div class="card-container margin-top-24">
-        <canvas id="canvas" class="canvas"></canvas>
+        <canvas id="canvas" class="canvas" width='{{canvasWidth}}' height='{{canvasHeight}}'></canvas>
     </div>
 
 
