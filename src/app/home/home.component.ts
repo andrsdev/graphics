@@ -29,6 +29,11 @@ export class HomeComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    
+  }
+
+  ngAfterViewInit(){
+    this.drawEmptyCartesianPlane();
   }
 
   async loadExcelFile() {
@@ -197,6 +202,42 @@ export class HomeComponent implements OnInit {
 
     canvas.stroke();
   }
+
+  drawEmptyCartesianPlane(){
+    let element = <HTMLCanvasElement> document.getElementById("canvas");
+    let canvas = element.getContext("2d");
+    
+    canvas.fillStyle = "#000000";
+    canvas.strokeStyle = "#000000";
+    canvas.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
+    canvas.beginPath();
+
+    let maxDistanceX = Math.max(Math.abs(this.minX), Math.abs(this.maxX));
+    let maxDistanceY = Math.max(Math.abs(this.minY), Math.abs(this.maxY));
+
+    canvas.moveTo(this.canvasWidth / 2, 0);
+    canvas.lineTo(this.canvasWidth / 2, this.canvasHeight);
+
+    canvas.moveTo(0, this.canvasHeight / 2);
+    canvas.lineTo(this.canvasWidth, this.canvasHeight / 2);
+
+    canvas.fillText("Y", this.canvasWidth / 2 + 10, 10);
+    canvas.fillText("X", this.canvasWidth - 10, this.canvasHeight / 2 - 12);
+
+    for (let i = this.canvasWidth / 10; i < this.canvasWidth; i+=this.canvasWidth / 10) {   
+      canvas.moveTo(i, this.canvasHeight / 2 - 5);
+      canvas.lineTo(i, this.canvasHeight / 2 + 5);
+    }
+    
+    for (let i = this.canvasHeight / 10; i < this.canvasHeight; i+=this.canvasHeight / 10) {   
+      canvas.moveTo(this.canvasWidth / 2 - 5, i);
+      canvas.lineTo(this.canvasWidth / 2 + 5, i);
+    }
+
+    canvas.stroke();
+  }
+
+
 
   drawDispersionGraphic(){
 
