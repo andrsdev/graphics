@@ -36,6 +36,15 @@ export class HomeComponent implements OnInit {
     this.drawEmptyCartesianPlane();
   }
 
+  downloadSchemeFile(){
+    const ws: XLSX.WorkSheet = XLSX.utils.aoa_to_sheet([
+      ["x", "y"]
+    ]);
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+    XLSX.writeFile(wb, 'Scheme.xlsx');
+  }
+
   async loadExcelFile() {
     document.getElementById('fileOpener').click();
   }
@@ -228,7 +237,7 @@ export class HomeComponent implements OnInit {
       canvas.moveTo(i, this.canvasHeight / 2 - 5);
       canvas.lineTo(i, this.canvasHeight / 2 + 5);
     }
-    
+
     for (let i = this.canvasHeight / 10; i < this.canvasHeight; i+=this.canvasHeight / 10) {   
       canvas.moveTo(this.canvasWidth / 2 - 5, i);
       canvas.lineTo(this.canvasWidth / 2 + 5, i);
